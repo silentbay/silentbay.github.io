@@ -1,0 +1,22 @@
+		<div class="col-md-3">
+			<div class="col-md-12 col-sm-6 col-xs-6">
+				<div class="panel panel-default">
+					<div class="panel-heading"><span class="panel-title"><span class="glyphicon glyphicon-tag"></span>&nbsp;Метки</span></div>
+					<div class="panel-body">{% for tag in site.tags %}<a class="btn btn-default btn-xs" href="/search.html?tags={{ tag | first }}">{{ tag | first }} <span class="label label-default">{{ tag | last | size }}</span></a> {% endfor %}</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-sm-6 col-xs-6">
+				<div class="panel panel-default">
+					<div class="panel-heading"><span class="panel-title"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;Ссылки</span></div>
+					<div class="panel-body">
+						<div class="list-group">
+							<a href="/rss.xml" class="list-group-item"><span class="glyphicon glyphicon-hand-right"></span> RSS Feed</a>
+							<a href="//github.com/silentbay/silentbay.github.io/tree/core" class="list-group-item"><span class="glyphicon glyphicon-hand-wrench"></span> Source on GitHub</a>
+							<a href="//facebook.com/anovrus" class="list-group-item"><span class="glyphicon glyphicon-comment"></span> Facebook</a>
+							<a href="//360cities.net/profile/ar" class="list-group-item"><span class="glyphicon glyphicon-picture"></span> 360cities</a>
+							<a href="http://www.scapeart.org" class="list-group-item"><span class="glyphicon glyphicon-globe"></span> Scapeart</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

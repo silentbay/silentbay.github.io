@@ -1,0 +1,22 @@
+---
+layout: default
+title: "Главная"
+---
+		<div class="col-md-9">{% for post in paginator.posts %}
+			<div class="panel panel-default">
+				<div class="panel-heading hidden-xs" style="height: 150px; background-image: url('{% if post.headimg %}{{post.headimg}}{% else %}/data/null.jpg{% endif %}'); background-position: center">{% include shareindex.html %}</div>
+				<div class="panel-body">
+					<h1>{{ post.title }}</h1>
+					<div class="well text-justify">
+						{{ post.excerpt }}
+						<a class="btn btn-default pull-right" href="{{ post.url }}">Читать дальше&nbsp;<span class="glyphicon glyphicon glyphicon-eye-open"></span></a>
+					</div>
+				</div>
+				<div class="panel-footer"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<a class="btn btn-default btn-xs" href="/archive/">{{ post.date | date_to_long_string }}</a><span class="pull-right"><span class="glyphicon glyphicon-tag"></span>&nbsp;{% for tag in post.tags %}<a class="btn btn-default btn-xs" href="/search.html?tags={{ tag }}">{{ tag }}</a>&nbsp;{% endfor %}</span></div>
+			</div>{% endfor %}
+			<ul class="pager">
+				<li class="previous"><a href="{{ paginator.previous_page_path }}"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Сюда</a></li>
+				<li><a href="/archive"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Страница {{ paginator.page }} из {{ paginator.total_pages }}</a></li>
+				<li class="next"><a href="{{ paginator.next_page_path }}">Туда&nbsp;<span class="glyphicon glyphicon-arrow-right"></span></a></li>
+			</ul>
+		</div>

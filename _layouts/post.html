@@ -1,0 +1,18 @@
+---
+layout: default
+---
+		<div class="col-md-9">
+			<div class="panel">
+				<div class="panel-heading hidden-xs" style="height: 150px; background-image: url('{% if page.headimg %}{{page.headimg}}{% else %}/data/null.jpg{% endif %}'); background-position: center">{% include sharepost.html %}</div>
+				<div class="panel-body">
+					<h1>{{ page.title }}</h1>
+					<div class="well text-justify">
+						{{ content }}
+					</div>
+				</div>
+				<div class="panel-footer"><span class="glyphicon glyphicon-calendar"></span>&nbsp;<a class="btn btn-default btn-xs" href="/archive/">{{ page.date | date_to_long_string }}</a><span class="pull-right"><span class="glyphicon glyphicon-tag"></span>&nbsp;{% for tag in page.tags %}<a class="btn btn-default btn-xs" href="/search.html?tags={{ tag }}">{{ tag }}</a> {% endfor %}</span>
+					<hr>
+					{% include comments.html %}
+				</div>
+			</div>
+		</div>

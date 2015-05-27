@@ -1,0 +1,10 @@
+					<div class="well">
+						<div class="row">
+							<div class="col-sm-2"><h1 class="text-center">{{ include.param }}</h1></div>
+							<div class="col-sm-10">
+								<div class="list-group">{% for post in site.posts %}{% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}{% capture year1 %}{{ include.param }}{% endcapture %}{% if year == year1 %}
+									<a href="{{ post.url }}" class="list-group-item">{{ post.title }}<span class="label label-default pull-right">{{ post.date | date_to_long_string}}</span></a>{% endif %}{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>

@@ -1,0 +1,7 @@
+name: Silent Bay
+url: http://silentbay.github.io
+markdown: redcarpet
+permalink: archive/:year/:title.html
+exclude: [README.md]
+paginate: 7
+paginate_path: "index/page:num"
