@@ -1,12 +1,12 @@
 ---
 layout: default
 ---
-		<div class="col-md-9">
-			<div class="panel">
+		<div class="col-md-9" itemscope itemtype="http://schema.org/Blog">
+			<div class="panel panel-default" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
 				<div class="panel-heading hidden-xs" style="height: 150px; background-image: url('{% if page.headimg %}{{page.headimg}}{% else %}/data/null.jpg{% endif %}'); background-position: center">{% include sharepost.html %}</div>
 				<div class="panel-body">
-					<h1>{{ page.title }}</h1>
-					<div class="well text-justify">
+					<h1 itemprop="headline">{{ page.title }}</h1>
+					<div class="well text-justify" itemprop="articleBody">
 						{{ content }}
 					</div>
 				</div>
