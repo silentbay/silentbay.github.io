@@ -1,6 +1,6 @@
 name: Silent Bay
 url: http://silentbay.github.io
-markdown: redcarpet
+markdown: kramdown
 permalink: archive/:year/:title.html
 exclude: [README.md]
 paginate: 7
