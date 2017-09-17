@@ -1,3 +1,5 @@
+YandexFotkiLoader(document.getElementsByClassName('yfl_slideshow'));
+
 (function(window, document, undefined) {
   var majusculeFirst = function(str) {
     return str.charAt(0).toUpperCase() + str.substring(1);
