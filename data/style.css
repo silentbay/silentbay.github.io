@@ -54,12 +54,6 @@ h1,
 	color: #333;
 	text-decoration: none;
 }
-.well a:before {
-	content: "\e144";
-	font-family: 'Glyphicons Halflings';
-	font-style: normal;
-	font-weight: normal;
-}
 [class*="btn"]:before {
 	content: "" !important;
 }
