@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", function() {
+     YandexFotkiLoader(document.getElementsByClassName('yfl_slideshow'));
+}); 
+
 function YFLInstance(e, t) {
  return this.defaults = {},
  this.el              = e,
