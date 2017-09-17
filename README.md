@@ -16,6 +16,8 @@ Share icons based on [Share42](http://share42.com)
 
 Use `/include/footer.html` for your counter.
 
+`{% include yfl.html username="" album="" size="" type="" time=""%}`
+
 # Post archive
 
 Insert `{% include archive.html param="year" %}` into `/archive/index.html`
