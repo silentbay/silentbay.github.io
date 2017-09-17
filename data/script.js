@@ -1,5 +1,243 @@
 YandexFotkiLoader(document.getElementsByClassName('yfl_slideshow'));
 
+function YFLInstance(e, t) {
+ return this.defaults = {},
+ this.el              = e,
+ this.YFUrl           = "",
+ this.uid             = this
+  .el
+  .getAttribute("yfl-uid"),
+ this.s               = Object.assign({}, this.defaults, t),
+ this.items           = [],
+ this.init(),
+ this
+}
+function YFLOptions(e) {
+ var t = function (e) {
+   return e = e.trim(),
+   e
+    ? (
+     option_ar = e.split(":"),
+     2 == option_ar.length
+      ? (
+       name  = option_ar[0].trim(),
+       value = option_ar[1].trim(),
+       -1 !== ["yfl_album", "yfl_time"].indexOf(name) && (value = parseInt(value)),
+       [name, value]
+      )
+      : (l("YFL option : ", e, " is not allowable"), "")
+    )
+    : (l("YFL option is empty"), "")
+  },
+  n    = function (e, t) {
+   return e[t[0]] = t[1].toLowerCase(),
+   e
+  };
+ return e
+  .split(";")
+  .map(t)
+  .filter(Boolean)
+  .reduce(n, {})
+}
+var J50Npi = {
+ currentScript: null,
+ getJSON      : function (e, t, n, i) {
+  var s = e + (
+    e.indexOf("?") + 1
+     ? "&"
+     : "?"
+   ),
+   l    = document.getElementsByTagName("head")[0],
+   o    = document.createElement("script"),
+   a    = [],
+   r    = "";
+  this["success_" + i] = n,
+  t.callback           = "J50Npi.success_" + i;
+  for (r in t) 
+   a.push(r + "=" + encodeURIComponent(t[r]));
+  s      += a.join("&"),
+  o.type = "text/javascript",
+  o.src  = s,
+  this.currentScript && l.removeChild(this.currentScript),
+  l.appendChild(o)
+ },
+ success      : null
+};
+e                                              = console.error,
+window.yflData                                 = {
+ uid: 0
+},
+YFLInstance.prototype.loguid                   = function (e) {
+ console.log("THIS " + e + " >>>", this.uid)
+},
+YFLInstance.prototype.init                     = function () {
+ function e(e) {
+  t.jsonfill(e)
+ }
+ var t = this;
+ this.YFUrl        = "https://api-fotki.yandex.ru/api/users/" + this.s.username + "/alb" +
+   "um/" + this.s.album + "/photos/?format=json&callback=J50Npi.success",
+ this.el.className += " yfl_slideshow-size_" + this.s.size,
+ t.structureConstructor(),
+ J50Npi.getJSON(this.YFUrl, {}, e, t.uid)
+},
+YFLInstance.prototype.structureConstructor     = function () {
+ var e = document.createElement("a");
+ e.className = "prev",
+ e.innerText = "‹";
+ var t = document.createElement("a");
+ t.className = "next",
+ t.innerText = "›";
+ var n = document.createElement("div");
+ n.className = "slides";
+ var i = document.createElement("div");
+ i.className = "blueimp-carousel blueimp-gallery blueimp-gallery-carousel blueimp-gallery-cont" +
+   "rols";
+ var s = document.createElement("div");
+ s.className = "yfl_slideshow-images";
+ var l = document.createElement("div");
+ l.className = "yfl_slideshow-meta";
+ var o = document.createElement("div");
+ o.className = "yfl_slideshow-caption";
+ var a = document.createElement("div");
+ a.className = "yfl_slideshow-num",
+ l.appendChild(o),
+ l.appendChild(a),
+ i.appendChild(n),
+ i.appendChild(e),
+ i.appendChild(t),
+ i.appendChild(l),
+ self
+  .el
+  .appendChild(i),
+ self
+  .el
+  .appendChild(s)
+},
+YFLInstance.prototype.imageElementsConstructor = function () {
+ var e = this;
+ if (
+  DOMimages = e.el.getElementsByClassName("yfl_slideshow-images"),
+  !DOMimages.length
+ ) 
+  return void console.error(".yfl_slideshow-images container not found");
+ var t;
+ e
+  .items
+  .forEach(function (e) {
+   t       = document.createElement("A"),
+   t.href  = e.href,
+   t.title = e.title,
+   DOMimages[0].appendChild(t)
+  })
+},
+YFLInstance.prototype.setNumAll                = function (e) {
+ var t = this;
+ if (DOM = t.el.getElementsByClassName("yfl_slideshow-num"), !DOM.length) 
+  return void console.error(".yfl_slideshow-num container not found");
+ DOM[0].innerText = "1/" + e
+},
+YFLInstance.prototype.setAlbum                 = function (e) {
+ var t = this;
+ if (DOM = t.el.getElementsByClassName("yfl_slideshow-caption"), !DOM.length) 
+  return void console.error(".yfl_slideshow-caption container not found");
+ DOM[0].innerText = e
+},
+YFLInstance.prototype.jsonfill                 = function (e) {
+ for (
+  var t = this,
+  n     = t.s.size.toUpperCase(),
+  i     = 0;
+  i < e.entries.length;
+  i++
+ ) {
+  var s = e
+   .entries[i]
+   .img[n];
+  if (s == undefined) 
+   var s = e
+    .entries[i]
+    .img
+    .orig;
+  s.title = e
+   .entries[i]
+   .title,
+  t
+   .items
+   .push(s)
+ }
+ t.setAlbum(e.title),
+ t.setNumAll(e.entries.length),
+ t.imageElementsConstructor(),
+ t.PluginBlueimpInit()
+},
+YFLInstance.prototype.ajaxload                 = function () {
+ function e() {
+  4 == this.readyState && 200 == this.status
+   ? n.jsonfill(t.responseText)
+   : (
+    console.error("YFL request failed : ", this.responseURL),
+    console.error("return: ", this.status + ":" + this.statusText)
+   )
+ }
+ var t,
+  n = this;
+ t = new XMLHttpRequest,
+ t.open("GET", this.YFUrl, !1),
+ t.onreadystatechange = e,
+ t.send(null)
+},
+YFLInstance.prototype.PluginBlueimpInit        = function () {
+ function e() {
+  var e = this
+   .container[0]
+   .getElementsByClassName(this.options.counterElementClass);
+  e.length && (e[0].innerText = this.index + 1 + "/" + this.num)
+ }
+ var t = this.el,
+  n    = t.getElementsByClassName("yfl_slideshow-images"),
+  i    = t.getElementsByClassName("blueimp-carousel");
+ if (!n.length) 
+  return void console.error(
+   "Element not found: .yfl_slideshow > .yfl_slideshow-images"
+  );
+ if (!i.length) 
+  return void console.error(
+   "Element not found: .yfl_slideshow > .blueimp-carousel"
+  );
+ n = n[0],
+ i = i[0];
+ var s = {
+  carousel                  : !0,
+  container                 : i,
+  counterElementClass       : "yfl_slideshow-num",
+  onslide                   : e,
+  thumbnailIndicators       : !1,
+  titleElement              : ".yfl_slideshow-caption",
+  toggleControlsOnSlideClick: !1
+ };
+ blueimp.Gallery(n.getElementsByTagName("a"), s)
+},
+window.YandexFotkiLoader                       = function (t) {
+ for (var n = 0; n < t.length; n++) 
+  if (el = t[n], index = "el" + n, el) 
+   try {
+    if (el.hasAttribute("yfl-options")) 
+     try {
+      window.yflData.uid++,
+      options = new YFLOptions(el.getAttribute("yfl-options")),
+      el.setAttribute("yfl-uid", index),
+      window.yflData[index] = new YFLInstance(el, options)
+     } catch (t) {
+      e("yafotkiloader could not initiate instance")
+     }
+    else 
+     l("init with default options")
+   } catch (t) {
+    e("yafotkiloader has not initiated properly")
+   }
+  };
+
 (function(window, document, undefined) {
   var majusculeFirst = function(str) {
     return str.charAt(0).toUpperCase() + str.substring(1);
@@ -75,6 +313,7 @@ YandexFotkiLoader(document.getElementsByClassName('yfl_slideshow'));
   };
 })(window, window.document);
 
+/* search tags */
 $(function() {
   var parameters = ['category', 'tags'];
   var map = {}
@@ -96,6 +335,7 @@ $(function() {
   alxPrc.replaceERBTags($('div.highlight').find('code.text'));
   alxPrc.replaceERBTags($('p code'));
 });
+
 /* fansybox */
 $(document).ready(function() {
 	$(".img-thumbnail").fancybox({
@@ -112,6 +352,7 @@ $(document).ready(function() {
     }
 });
 });
+
 /* share42.com | 28.05.2014 | (c) Dimox */
 (function ($) {
 	$(function () {
